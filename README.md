@@ -4,5 +4,6 @@
 
 ## Use
 ```bash
- $ sbt run
+ $ sbt assembly
+ $ java -jar target/scala-2.12/fastpath-demo-assembly-2.0.0.jar
 ```
