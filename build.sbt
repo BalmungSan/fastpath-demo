@@ -11,9 +11,12 @@ sourceGenerators in Compile += Def.task {
   import scala.collection.mutable
 
   val inspectionClass = classOf[Inspection]
-  val fastCPScanner = new FastClasspathScanner(inspectionClass.getPackage.getName)
   val inspections = mutable.ListBuffer.empty[Inspection]
+
+  //we need to override the scanner class loader so it can find the scapegoat inspections
+  val fastCPScanner = new FastClasspathScanner(inspectionClass.getPackage.getName)
   fastCPScanner
+    .overrideClassLoaders(inspectionClass.getClassLoader)
     .matchSubclassesOf(
       inspectionClass,
       new SubclassMatchProcessor[Inspection] {
